@@ -15,6 +15,7 @@ interface User {
 interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
+  tempEmail: string | null;
   token:string | null;
   loading: boolean;
   error: string | null;
@@ -27,6 +28,7 @@ const initialState: AuthState = {
   user: null,
   isAuthenticated: false,
   token:null,
+  tempEmail:null,
   loading: false,
   error: null,
 };
@@ -62,7 +64,7 @@ export const signupUser = createAsyncThunk(
 
 export const verifyOTP = createAsyncThunk(
   'auth/verifyOTP',
-  async (userData:{ otp: string ,email:string}, { rejectWithValue }) => {
+  async (userData:{ otp: string ,tempEmail:string}, { rejectWithValue }) => {
     try {
       const response = await axios.post(`${BASE_URL}/auth/verifyOTP`, userData);
       return response.data;
@@ -113,8 +115,11 @@ const authSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(signupUser.fulfilled, (state) => {
+      .addCase(signupUser.fulfilled, (state,action) => {
         state.loading = false;
+        state.tempEmail = action.payload.email;
+        console.log(action.payload);
+        
       })
       .addCase(signupUser.rejected, (state, action) => {
         state.loading = false;

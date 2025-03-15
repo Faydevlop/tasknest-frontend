@@ -13,7 +13,7 @@ const Otppage = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch<AppDispatch>();
-  const { loading, error,user } = useSelector((state: RootState) => state.auth);
+  const { loading, error,user,tempEmail } = useSelector((state: RootState) => state.auth);
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,12 +28,15 @@ const Otppage = () => {
       setErrors('OTP must be 6 digits');
       return;
     }
+ 
+    
 
-    if (!user) {
-        toast.error('User not found');
-        return;
-      }
-    const resultAction = await  dispatch(verifyOTP({otp,email:user.email}))
+   
+    if (!tempEmail) {
+      toast.error('Email not found');
+      return;
+    }
+    const resultAction = await dispatch(verifyOTP({ otp, tempEmail }));
       
   
       if (verifyOTP.fulfilled.match(resultAction)) {
