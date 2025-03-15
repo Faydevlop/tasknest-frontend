@@ -3,12 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/index'; 
 import { clearError, signupUser } from '../../store/slices/authSlice';
 import {  CheckCircle, Mail, Lock, User } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 
 const Signup = () => {
 
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
+
     const { loading, error } = useSelector((state: RootState) => state.auth);
     const [errors, setErrors] = useState({
         username: '',
@@ -55,7 +58,7 @@ const Signup = () => {
         return valid;
     };
     
-      const handleSubmit = (e: React.FormEvent) => {
+      const handleSubmit = async(e: React.FormEvent) => {
         e.preventDefault();
         
         if (formData.password !== formData.confirmPassword) {
@@ -65,12 +68,22 @@ const Signup = () => {
           if (!validateForm()) {
             return;
         }
+
+
+        const resultAction = await dispatch(
+            signupUser({
+              name: formData.username,
+              email: formData.email,
+              password: formData.password,
+            })
+          );
       
-          dispatch(signupUser({
-            name: formData.username,
-            email: formData.email,
-            password: formData.password,
-          }));
+          if (signupUser.fulfilled.match(resultAction)) {
+            toast.success('OTP sent successfully! Redirecting...');
+            navigate('/auth/verifyOTP');
+          } else {
+            toast.error( 'Signup failed');
+          }
 
       };
     

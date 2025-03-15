@@ -3,10 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/index';
 import { clearError, loginUser } from '../../store/slices/authSlice';
 import {  CheckCircle, Mail, Lock } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const Login = () => {
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
+
+
     const { loading, error } = useSelector((state: RootState) => state.auth);
     const [errors, setErrors] = useState({
         email: '',
@@ -32,10 +36,27 @@ const Login = () => {
         return Object.values(tempErrors).every((x) => x === '');
       };
     
-      const handleSubmit = (e: React.FormEvent) => {
+      const handleSubmit = async(e: React.FormEvent) => {
         e.preventDefault();
         if (validate()) {
-          dispatch(loginUser({ email: formData.email, password: formData.password }));
+
+            const resultAction = await dispatch(loginUser({ email: formData.email, password: formData.password }));
+          
+              if (loginUser.fulfilled.match(resultAction)) {
+                const userRole = resultAction.payload.user.role; 
+                toast.success('Signin successfully! Redirecting...');
+
+                if (userRole === 'Manager') {
+                    navigate('/manager/Dashboard');
+                } else if (userRole === 'Employee') {
+                    navigate('/employee/dashboard');
+                } 
+
+              } else {
+                toast.error( 'Signup failed');
+              }
+
+          
         }
       };
       const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

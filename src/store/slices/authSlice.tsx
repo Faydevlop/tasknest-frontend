@@ -15,6 +15,7 @@ interface User {
 interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
+  token:string | null;
   loading: boolean;
   error: string | null;
 }
@@ -25,6 +26,7 @@ interface AuthState {
 const initialState: AuthState = {
   user: null,
   isAuthenticated: false,
+  token:null,
   loading: false,
   error: null,
 };
@@ -50,7 +52,19 @@ export const signupUser = createAsyncThunk(
   'auth/signupUser',
   async (userData: { name: string; email: string; password: string;  }, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${BASE_URL}/signup`, userData);
+      const response = await axios.post(`${BASE_URL}/auth/register`, userData);
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Signup failed');
+    }
+  }
+);
+
+export const verifyOTP = createAsyncThunk(
+  'auth/verifyOTP',
+  async (userData:{ otp: string ,email:string}, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${BASE_URL}/auth/verifyOTP`, userData);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || 'Signup failed');
@@ -68,6 +82,7 @@ const authSlice = createSlice({
     logout: (state) => {
       state.user = null;
       state.isAuthenticated = false;
+      state.token = null;
       state.error = null;
     },
     clearError:(state)=>{
@@ -81,9 +96,10 @@ const authSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(loginUser.fulfilled, (state, action: PayloadAction<User>) => {
+      .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        state.user = action.payload.user;
+        state.token = action.payload.token;
         state.isAuthenticated = true;
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -101,6 +117,21 @@ const authSlice = createSlice({
         state.loading = false;
       })
       .addCase(signupUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
+
+    // VerifyOTP
+    builder
+      .addCase(verifyOTP.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(verifyOTP.fulfilled, (state,action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+      })
+      .addCase(verifyOTP.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });
