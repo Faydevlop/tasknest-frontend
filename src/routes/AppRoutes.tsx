@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import {  useSelector } from 'react-redux';
 
 
-// Auth Pages
+// Auth Pages / common
 import Login from '../pages/auth/Login';
 import Signup from '../pages/auth/Signup';
 import Otppage from '../pages/auth/Otppage';
@@ -12,7 +12,12 @@ import Otppage from '../pages/auth/Otppage';
 import Dashboard from '../pages/manager/Dashboard'
 import TeamManagement from '../pages/manager/TeamManagement';
 import TasksPage from '../pages/manager/TaskPage';
-import Profile from '../pages/common/Profile-page';
+import Profile from '../pages/common/Profile-page';                   
+
+// Employee pages
+import EmployeeDashboard from '../pages/employee/Dashboard';
+import EmployeeProfile from '../pages/employee/Profile';  
+import EmployeeTask from '../pages/employee/TaskPage'                    
 
 // Protected Route Component
 import ProtectedRoute from '../components/ProtectedRoute';
@@ -41,15 +46,15 @@ const AppRoutes: React.FC = () => {
         <Route path="/manager/dashboard" element={<Dashboard />} />
         <Route path="/manager/tasks" element={<TasksPage />} />
         <Route path="/manager/users" element={<TeamManagement />} />
-        <Route path="/manager/settings" element={<Profile />} />
+        <Route path="/manager/Profile" element={<Profile />} />
       </Route>
 
       {/* Employee Routes */}
-      {/* <Route element={<ProtectedRoute allowedRoles={['Employee']} />}>
+      {/* <Route element={<ProtectedRoute allowedRoles={['Employee']} />}> */}
         <Route path="/employee/dashboard" element={<EmployeeDashboard />} />
-        <Route path="/employee/tasks" element={<EmployeeTasks />} />
-        <Route path="/employee/settings" element={<Profile />} />
-      </Route> */}
+        <Route path="/employee/tasks" element={<EmployeeTask />} />
+        <Route path="/employee/settings" element={<EmployeeProfile />} />
+      {/* </Route> */}
 
       {/* Redirect to Login if No Routes Match */}
       <Route path="*" element={<Navigate to={user ? `/${user.role}/dashboard` : '/auth/login'} />} />

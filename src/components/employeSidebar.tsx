@@ -4,11 +4,11 @@ import { Link, useLocation } from 'react-router-dom';
 
 
 
-type AdminSidebarProps = {
+type EmbloyeeSidebarProps = {
     isSidebarOpen: boolean;
 };
 
-const userSidebar = ({ isSidebarOpen }:AdminSidebarProps) => {
+const EmployeSidebar = ({ isSidebarOpen }:EmbloyeeSidebarProps) => {
     const location = useLocation(); 
     
     const sidebarItems = [
@@ -36,7 +36,7 @@ const userSidebar = ({ isSidebarOpen }:AdminSidebarProps) => {
           <nav className="flex-1 p-4">
             <ul className="space-y-2">
             {sidebarItems.map((item, index) => {
-              const isActive = location.pathname === `/manager/${item.to}`;
+              const isActive = location.pathname === `/employee/${item.to}`;
               return (
                 <li key={index}>
                   <Link
@@ -68,4 +68,4 @@ const userSidebar = ({ isSidebarOpen }:AdminSidebarProps) => {
   )
 }
 
-export default userSidebar
+export default EmployeSidebar

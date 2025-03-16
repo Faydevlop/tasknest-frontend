@@ -1,5 +1,5 @@
 import {Edit, LogOut, Menu, X} from 'lucide-react'
-import AdminSidebar from '../../components/AdminSidebar'
+import EmployeSidebar from '../../components/EmployeSidebar'
 import { useState } from 'react';
 
 const Profile = () => {
@@ -8,7 +8,7 @@ const Profile = () => {
   return (
     <div className="flex h-screen">
       
-      <AdminSidebar isSidebarOpen={isSidebarOpen} />
+      <EmployeSidebar isSidebarOpen={isSidebarOpen} />
     
       
     {/* Mobile Sidebar Toggle */}
