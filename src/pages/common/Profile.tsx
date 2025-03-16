@@ -1,14 +1,22 @@
-import {Edit, LogOut, Menu, X} from 'lucide-react'
-import EmployeSidebar from '../../components/EmployeSidebar'
+import {Edit, Menu, X} from 'lucide-react'
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import AdminSidebar from '../../components/AdminSidebar';
+import EmployeSidebar from '../../components/EmployeSidebar'
 
 const Profile = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { user } = useSelector((state: RootState) => state.auth);
+
 
   return (
     <div className="flex h-screen">
-      
-      <EmployeSidebar isSidebarOpen={isSidebarOpen} />
+      {user && user.role === 'Manager' ? (
+        <AdminSidebar isSidebarOpen={isSidebarOpen} />
+      ) : (
+        <EmployeSidebar isSidebarOpen={isSidebarOpen} />
+      )}
     
       
     {/* Mobile Sidebar Toggle */}
@@ -25,7 +33,7 @@ const Profile = () => {
         {/* Profile Picture */}
         <div className="relative">
           <img
-            src={""}
+            src={user && user.avatar ? user.avatar : ''}
             alt="User Avatar"
             className="w-32 h-32 rounded-full border-4 border-gray-700"
           />
@@ -33,9 +41,9 @@ const Profile = () => {
 
         {/* User Info */}
         <div className="mt-4 text-center">
-          <h2 className="text-2xl font-bold">jhone</h2>
-          <p className="text-gray-400">john@gmail.com</p>
-          <p className="text-gray-300 mt-2">manager</p>
+          <h2 className="text-2xl font-bold">{ user && user.name}</h2>
+          <p className="text-gray-400">{ user && user.email}</p>
+          <p className="text-gray-300 mt-2">{ user && user.role}</p>
         </div>
 
         {/* Buttons */}

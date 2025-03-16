@@ -1,13 +1,14 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 
 // Interfaces
 
 interface User {
-  id: string;
+  _id: string;
   name: string;
   email: string;
+  avatar:string;
   role: 'Manager' | 'Employee';
   token: string;
 }
@@ -103,6 +104,9 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isAuthenticated = true;
+        localStorage.setItem('token', action.payload.token);
+        console.log(action.payload);
+
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
@@ -135,6 +139,10 @@ const authSlice = createSlice({
       .addCase(verifyOTP.fulfilled, (state,action) => {
         state.loading = false;
         state.user = action.payload.user;
+        state.isAuthenticated = true;
+        state.token = action.payload.token;
+        localStorage.setItem('token', action.payload.token);
+        
       })
       .addCase(verifyOTP.rejected, (state, action) => {
         state.loading = false;

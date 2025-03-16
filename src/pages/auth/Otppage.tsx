@@ -13,7 +13,7 @@ const Otppage = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch<AppDispatch>();
-  const { loading, error,user,tempEmail } = useSelector((state: RootState) => state.auth);
+  const { loading, error,tempEmail } = useSelector((state: RootState) => state.auth);
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

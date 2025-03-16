@@ -8,16 +8,17 @@ import Login from '../pages/auth/Login';
 import Signup from '../pages/auth/Signup';
 import Otppage from '../pages/auth/Otppage';
 
+// common pages
+import Profile from '../pages/common/Profile'; 
+import TasksPage from '../pages/common/TaskPage';
+
 // Admin pages
 import Dashboard from '../pages/manager/Dashboard'
 import TeamManagement from '../pages/manager/TeamManagement';
-import TasksPage from '../pages/manager/TaskPage';
-import Profile from '../pages/common/Profile-page';                   
 
 // Employee pages
 import EmployeeDashboard from '../pages/employee/Dashboard';
-import EmployeeProfile from '../pages/employee/Profile';  
-import EmployeeTask from '../pages/employee/TaskPage'                    
+                  
 
 // Protected Route Component
 import ProtectedRoute from '../components/ProtectedRoute';
@@ -46,15 +47,15 @@ const AppRoutes: React.FC = () => {
         <Route path="/manager/dashboard" element={<Dashboard />} />
         <Route path="/manager/tasks" element={<TasksPage />} />
         <Route path="/manager/users" element={<TeamManagement />} />
-        <Route path="/manager/Profile" element={<Profile />} />
+        <Route path="/manager/settings" element={<Profile />} />
       </Route>
 
       {/* Employee Routes */}
-      {/* <Route element={<ProtectedRoute allowedRoles={['Employee']} />}> */}
+      <Route element={<ProtectedRoute allowedRoles={['Employee']} />}>
         <Route path="/employee/dashboard" element={<EmployeeDashboard />} />
-        <Route path="/employee/tasks" element={<EmployeeTask />} />
-        <Route path="/employee/settings" element={<EmployeeProfile />} />
-      {/* </Route> */}
+        <Route path="/employee/tasks" element={<TasksPage />} />
+        <Route path="/employee/settings" element={<Profile />} />
+      </Route>
 
       {/* Redirect to Login if No Routes Match */}
       <Route path="*" element={<Navigate to={user ? `/${user.role}/dashboard` : '/auth/login'} />} />
