@@ -5,11 +5,10 @@ import { userApi } from '../../services/api';
 import { RootState } from '../../store';
 import { useSelector } from 'react-redux';
 import SelectUserModal from '../../components/TeamManagement/SelectUserModal'
-import toast from 'react-hot-toast';
 
 
 type Employee = {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   role: string;
@@ -105,7 +104,7 @@ const EmployeesPage = () => {
               <tbody>
                 {filteredEmployees.map((employee) => (
                   <tr
-                    key={employee.id}
+                    key={employee._id}
                     className="border-b border-gray-100 hover:bg-gray-50 cursor-pointer"
                     onClick={() => setSelectedEmployee(employee)}
                   >

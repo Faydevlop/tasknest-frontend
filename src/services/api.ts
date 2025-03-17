@@ -88,6 +88,17 @@ export const TaskAPI = {
       toast.error('error deleting task')
       throw error
     }
+  },
+
+  getInfo:async()=>{
+    try {
+        const response = await api.get(`/task/info`)
+        return response.data
+    } catch (error) {
+        console.error('Error fetching info:', error)
+      toast.error('Error fetching info')
+      throw error
+    }
   }
 }
 
@@ -114,6 +125,10 @@ export const userApi = {
       throw error
         }
     }
+
+
+
+
 
 
 }

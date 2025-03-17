@@ -13,11 +13,10 @@ import Profile from '../pages/common/Profile';
 import TasksPage from '../pages/common/TaskPage';
 
 // Admin pages
-import Dashboard from '../pages/manager/Dashboard'
 import TeamManagement from '../pages/manager/TeamManagement';
 
 // Employee pages
-import EmployeeDashboard from '../pages/employee/Dashboard';
+import Dashboard from '../pages/common/Dashboard';
                   
 
 // Protected Route Component
@@ -52,7 +51,7 @@ const AppRoutes: React.FC = () => {
 
       {/* Employee Routes */}
       <Route element={<ProtectedRoute allowedRoles={['Employee']} />}>
-        <Route path="/employee/dashboard" element={<EmployeeDashboard />} />
+        <Route path="/employee/dashboard" element={<Dashboard />} />
         <Route path="/employee/tasks" element={<TasksPage />} />
         <Route path="/employee/settings" element={<Profile />} />
       </Route>
