@@ -10,7 +10,7 @@ type EmbloyeeSidebarProps = {
     isSidebarOpen: boolean;
 };
 
-const EmployeSidebar = ({ isSidebarOpen }:EmbloyeeSidebarProps) => {
+const EmployeeSidebar = ({ isSidebarOpen }:EmbloyeeSidebarProps) => {
     const location = useLocation(); 
     const dispatch = useDispatch()
     const navigate = useNavigate();
@@ -78,4 +78,4 @@ const EmployeSidebar = ({ isSidebarOpen }:EmbloyeeSidebarProps) => {
   )
 }
 
-export default EmployeSidebar
+export default EmployeeSidebar

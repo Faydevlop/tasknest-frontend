@@ -5,7 +5,7 @@ import {
   X,
 } from 'lucide-react';
 
-import EmployeSidebar from '@components/EmployeSidebar';
+import EmployeSidebar from '@components/EmployeeSidebar';
 import AdminSidebar from '../../components/AdminSidebar';
 import { RootState } from '../../store';
 import { useSelector } from 'react-redux';

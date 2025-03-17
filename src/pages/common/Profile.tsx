@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import AdminSidebar from '../../components/AdminSidebar';
-import EmployeSidebar from '@components/EmployeSidebar'
+import EmployeSidebar from '@components/EmployeeSidebar'
 
 const Profile = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
