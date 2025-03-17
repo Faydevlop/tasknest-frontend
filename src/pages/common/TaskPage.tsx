@@ -6,7 +6,7 @@ import CalendarGrid from '../../components/CalendarGrid'
 import CalendarSidebar from '../../components/CalendarSidebar'
 import AddTaskModal from '../../components/AddTaskModal'
 import { CalendarProvider, useCalendar } from '../../contexts/CalendarContext'
-import EmployeSidebar from '../../components/EmployeSidebar'
+import EmployeSidebar from '@components/EmployeSidebar'
 import {  RootState } from '../../store/index';
 import { useSelector } from 'react-redux'
 
