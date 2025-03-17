@@ -102,7 +102,9 @@ const EmployeesPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredEmployees.map((employee) => (
+                {filteredEmployees
+                  .filter((employee) => user && employee._id !== user._id)
+                .map((employee) => (
                   <tr
                     key={employee._id}
                     className="border-b border-gray-100 hover:bg-gray-50 cursor-pointer"
