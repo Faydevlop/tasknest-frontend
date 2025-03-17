@@ -128,12 +128,7 @@ const AddTaskModal: React.FC = () => {
     </select>
   </div>
             
-            {/* Error message display */}
-            {error && (
-              <div className="mb-4 p-2 bg-red-50 text-red-600 rounded-md text-sm">
-                {error}
-              </div>
-            )}
+            
           </div>
           <div className="flex justify-end gap-2 p-4 border-t">
             <button
