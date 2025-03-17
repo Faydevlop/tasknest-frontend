@@ -1,5 +1,4 @@
 {
-    "buildCommand": "npm run build",
-    "ignoreCommand": "tsc --noEmit"
+    "buildCommand": "npx tsc --noEmit && npm run build"
   }
   
