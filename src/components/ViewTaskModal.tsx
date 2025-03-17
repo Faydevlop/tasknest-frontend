@@ -3,22 +3,28 @@ import { RootState } from '../store';
 import { useSelector } from 'react-redux';
 import { useCalendar } from '../contexts/CalendarContext';
 
+type User = {
+    _id: string;
+    name: string;
+  };
+
+
 const IndependentTaskModal = ({ task, onClose}:any) => {
   const { user } = useSelector((state: RootState) => state.auth);
   const [tasksId,setTasksId] = useState('')
   const [taskTitle, setTaskTitle] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
   const [taskStatus, setTaskStatus] = useState('pending');
-  const [assignedTo, setAssignedTo] = useState('');
+  const [assignedTo, setAssignedTo] = useState<User | null>(null);
   const {deleteTask,updateTask} = useCalendar()
 
   useEffect(() => {
     if (task) {
-        setTasksId(task._id || '')
+      setTasksId(task._id || '');
       setTaskTitle(task.title || '');
       setTaskDescription(task.description || '');
       setTaskStatus(task.status || 'pending');
-      setAssignedTo(task.assignedTo || '');
+      setAssignedTo(task.assignedTo || null);
     }
   }, [task]);
 
@@ -78,12 +84,13 @@ const IndependentTaskModal = ({ task, onClose}:any) => {
             <div>
               <label className="block text-sm font-medium mb-1">Assigned To</label>
               <input
-                type="text"
-                disabled
-                value={assignedTo?.name}
-                onChange={(e) => setAssignedTo(e.target.value)}
-                className="w-full px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
+  type="text"
+  disabled
+  value={assignedTo?.name || ''}
+  onChange={(e) => setAssignedTo({ _id: assignedTo?._id || '', name: e.target.value })}
+  className="w-full px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+/>
+
             </div>
           )}
           <div className="flex justify-end gap-2 border-t pt-4">

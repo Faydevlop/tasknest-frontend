@@ -16,11 +16,6 @@ function Dashboard() {
   const { user } = useSelector((state: RootState) => state.auth);
   const [data, setData] = useState<{ totalTasks?: number; completedTasks?: number; totalEmployees?: number }>({})
 
-  const stats = [
-    { title: 'Total Tasks', key: 'totalTasks', color: 'bg-blue-500' },
-    { title: 'Tasks Completed', key: 'completedTasks', color: 'bg-green-500' },
-    { title: 'Total Employees', key: 'totalEmployees', color: 'bg-purple-500' }
-  ];
 
   const handlefetchInfo = async()=>{
     const data = await TaskAPI.getInfo()
