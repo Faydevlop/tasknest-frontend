@@ -1,7 +1,8 @@
 
 import {LayoutDashboard,CheckSquare,Users,Settings,LogOut,} from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
-
+import { useDispatch } from 'react-redux';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { logout } from '../store/slices/authSlice';
 
 
 type AdminSidebarProps = {
@@ -9,7 +10,16 @@ type AdminSidebarProps = {
 };
 
 const AdminSidebar = ({ isSidebarOpen }:AdminSidebarProps) => {
+    
     const location = useLocation(); 
+    const dispatch = useDispatch()
+    const navigate = useNavigate();
+
+
+    const handleLogout = () =>{
+      dispatch(logout())
+      navigate('/auth/login');
+    }
     
     const sidebarItems = [
         { icon: LayoutDashboard, text: 'Dashboard',to:'Dashboard'  },
@@ -59,7 +69,7 @@ const AdminSidebar = ({ isSidebarOpen }:AdminSidebarProps) => {
 
           {/* Logout Button */}
           <div className="p-4 border-t">
-            <button className="flex items-center gap-4 text-red-600 hover:bg-red-50 w-full px-4 py-3 rounded-lg">
+            <button onClick={handleLogout} className="flex items-center gap-4 text-red-600 hover:bg-red-50 w-full px-4 py-3 rounded-lg">
               <LogOut size={20} />
               <span>Logout</span>
             </button>

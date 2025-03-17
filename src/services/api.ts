@@ -90,3 +90,30 @@ export const TaskAPI = {
     }
   }
 }
+
+export const userApi = {
+    getUsers:async()=>{
+        try {
+            const response = await api.get(`/users/listallUsers`)
+        
+      return response.data.users
+        } catch (error) {
+            console.error('Error deleting task:', error)
+      
+      throw error
+        }
+    },
+
+    promotUser:async(data:any)=>{
+        try {
+            const response = await api.put('/users/promote',data);
+            toast.success('user promoted')
+            return response.data
+        } catch (error) { 
+            toast.error('error updating user role')
+      throw error
+        }
+    }
+
+
+}

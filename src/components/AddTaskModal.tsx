@@ -1,6 +1,8 @@
 import React from 'react'
 import { useCalendar } from '../contexts/CalendarContext'
 import { formatDisplayDate, cn } from '../utils/dateUtils'
+import { RootState } from '../store'
+import { useSelector } from 'react-redux'
 
 const AddTaskModal: React.FC = () => {
   const { 
@@ -14,6 +16,8 @@ const AddTaskModal: React.FC = () => {
     error,
     taskDescription, setTaskDescription, taskStatus, setTaskStatus, assignedTo, setAssignedTo,users
   } = useCalendar()
+  const { user } = useSelector((state: RootState) => state.auth);
+
 
   // If modal is not open or no date is selected, don't render
   if (!isModalOpen || !modalDate) return null
@@ -118,7 +122,9 @@ const AddTaskModal: React.FC = () => {
         <option key={user._id} value={user._id}>
           {user.name}
         </option>
+        
       ))}
+      <option value={user?._id}>{user?.name}(You)</option>
     </select>
   </div>
             
